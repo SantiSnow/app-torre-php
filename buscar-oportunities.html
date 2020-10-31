@@ -59,7 +59,6 @@
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         objeto = JSON.parse(this.responseText);
-                        console.log(objeto);
                         
                         $('#opportunity').append(objeto.opportunity);
                         $('#id').append(objeto.id);

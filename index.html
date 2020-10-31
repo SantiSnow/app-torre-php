@@ -55,7 +55,6 @@
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         respuesta = JSON.parse(this.responseText);
-                        console.log(respuesta);
 
                         $('#nombre').append(respuesta.person.name);
                         $('#id').append(respuesta.person.id);
