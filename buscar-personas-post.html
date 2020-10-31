@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+    <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.html">Buscar personas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="buscar-oportunities.html">Buscar oportunidades</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="buscar-ops-post.html">Busqueda POST oportunidades</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="buscar-personas-post.html">Busqueda POST personas</a>
+        </li>
+      </ul>
+      <br />
+
+<div class="container">
+    <div class="row">
+        <h1>Mi App Torre</h1>
+    </div>
+    <div class="row">
+        <h2>Buscar personas</h2>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-9">
+            <label for="name">Nombre:</label>
+            <input type="text" id="nameIngresado" name="name" placeholder="Enter the name here" class="form-control" />
+            <br />
+            <button type="submit" class="btn btn-primary" onclick="miFuncion()">Search</button>
+            <button type="submit" class="btn btn-danger" onclick="borrar()">Borrar</button>
+        </div>
+    </div>
+    <div>
+        <h2>Resultados de su busqueda:</h2>
+        <br />
+
+        <strong>Nombre: </strong><div class="col-md-9" id="nombre"></div><br />
+        <strong>Id: </strong><div class="col-md-9" id="id"></div><br />
+        <strong>Titulo: </strong><div class="col-md-9" id="titulo"></div><br />
+        <strong>Fecha creación del perfil: </strong><div class="col-md-9" id="fecha"></div><br />
+        <strong>Ubicación: </strong><div class="col-md-9" id="ubicacion"></div><br />
+        <strong>Zona horaria: </strong><div class="col-md-9" id="zonaHorario"></div><br />
+        <strong>Resumen: </strong><div class="col-md-9" id="resumen"></div><br />
+    </div>
+</div>
+
+
+
+    <script>
+
+        function miFuncion(){
+            var nameIngresado = $('#nameIngresado').val();
+                var xmlhttp = new XMLHttpRequest();
+            
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        respuesta = JSON.parse(this.responseText);
+                        console.log(respuesta);
+                        
+                        
+                        $('#nombre').append(objeto.person.name);
+                        $('#id').append(objeto.person.id);
+                        $('#titulo').append(objeto.person.professionalHeadline);
+                        $('#fecha').append(objeto.person.created);
+                        $('#ubicacion').append(objeto.person.location.name);
+                        $('#zonaHorario').append(objeto.person.location.timezone);
+                        $('#resumen').append(objeto.person.summaryOfBio);
+                    }
+                };
+            xmlhttp.open("POST", "http://localhost:3000/api/personas/" + nameIngresado, true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send(idIngresado);
+        }
+
+        function borrar(){
+            $('#opportunity').text("");
+            $('#id').text("");
+            $('#salario').text("");
+            $('#salarioMax').text("");
+            $('#status').text("");
+            $('#lugar').text("");
+            $('#objective').text("");
+            $('#deadline').text("");
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+    <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.html">Buscar personas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="buscar-oportunities.html">Buscar oportunidades</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="buscar-ops-post.html">Busqueda POST oportunidades</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="buscar-personas-post.html">Busqueda POST personas</a>
+        </li>
+      </ul>
+      <br />
+
+<div class="container">
+    <div class="row">
+        <h1>Mi App Torre</h1>
+    </div>
+    <div class="row">
+        <h2>Buscar oportunidades</h2>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-9">
+            <label for="name">ID:</label>
+            <input type="text" id="iDingresado" name="name" placeholder="Enter the ID here" class="form-control" />
+            <br />
+            <button type="submit" class="btn btn-primary" onclick="miFuncion()">Search</button>
+            <button type="submit" class="btn btn-danger" onclick="borrar()">Borrar</button>
+        </div>
+    </div>
+    <div>
+        <h2>Resultados de su busqueda:</h2>
+        <br />
+
+        <strong>Título de la vacante: </strong><div class="col-md-9" id="objective"></div>
+        <strong>Vacante: </strong><div class="col-md-9" id="opportunity"></div>
+        <strong>Salario mínimo: </strong><div class="col-md-9" id="salario"></div>
+        <strong>Salario máximo: </strong><div class="col-md-9" id="salarioMax"></div>
+        <strong>Id: </strong><div class="col-md-9" id="id"></div>
+        <strong>Modalidad: </strong><div class="col-md-9" id="lugar"></div>
+        <strong>Estado: </strong><div class="col-md-9" id="status"></div>
+        <strong>Fecha de finalización: </strong><div class="col-md-9" id="deadline"></div>
+    </div>
+</div>
+
+
+
+    <script>
+        function miFuncion(){
+            var idIngresado = $('#iDingresado').val();
+                var xmlhttp = new XMLHttpRequest();
+            
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        respuesta = JSON.parse(this.responseText);
+                        //console.log(respuesta);
+                        objeto = JSON.parse(respuesta.body);
+                        //console.log(objeto);
+                        
+                        $('#opportunity').append(objeto.opportunity);
+                        $('#id').append(objeto.id);
+                        $('#salario').append(objeto.compensation.currency + " " + objeto.compensation.minAmount)
+                        $('#salarioMax').append(objeto.compensation.currency + " " + objeto.compensation.maxAmount)
+                        $('#status').append(objeto.status);
+                        if(objeto.place.remote == true){
+                            $('#lugar').append("Remoto");
+                        }
+                        else{
+                            $('#lugar').append("Presencial");
+                        }
+                        $('#objective').append(objeto.objective);
+                        $('#deadline').append(objeto.deadline);
+                    }
+                };
+            xmlhttp.open("GET", "http://localhost:3000/api/oportunities/" + idIngresado, true);
+            xmlhttp.send();      
+
+        }
+
+        function borrar(){
+            $('#opportunity').text("");
+            $('#id').text("");
+            $('#salario').text("");
+            $('#salarioMax').text("");
+            $('#status').text("");
+            $('#lugar').text("");
+            $('#objective').text("");
+            $('#deadline').text("");
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
