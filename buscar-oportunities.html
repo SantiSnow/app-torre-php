@@ -15,12 +15,6 @@
         <li class="nav-item">
           <a class="nav-link" href="buscar-oportunities.html">Buscar oportunidades</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="buscar-ops-post.html">Busqueda POST oportunidades</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="buscar-personas-post.html">Busqueda POST personas</a>
-        </li>
       </ul>
       <br />
 
@@ -64,10 +58,8 @@
             
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        respuesta = JSON.parse(this.responseText);
-                        //console.log(respuesta);
-                        objeto = JSON.parse(respuesta.body);
-                        //console.log(objeto);
+                        objeto = JSON.parse(this.responseText);
+                        console.log(objeto);
                         
                         $('#opportunity').append(objeto.opportunity);
                         $('#id').append(objeto.id);
@@ -84,8 +76,9 @@
                         $('#deadline').append(objeto.deadline);
                     }
                 };
-            xmlhttp.open("GET", "http://localhost:3000/api/oportunities/" + idIngresado, true);
-            xmlhttp.send();      
+            xmlhttp.open("POST", "server/oportunidades.php", true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("id=" + idIngresado);    
 
         }
 

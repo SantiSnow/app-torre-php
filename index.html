@@ -15,12 +15,6 @@
         <li class="nav-item">
           <a class="nav-link" href="buscar-oportunities.html">Buscar oportunidades</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="buscar-ops-post.html">Busqueda POST oportunidades</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="buscar-personas-post.html">Busqueda POST personas</a>
-        </li>
       </ul>
       <br />
 
@@ -61,7 +55,6 @@
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         respuesta = JSON.parse(this.responseText);
-                        //objeto = JSON.parse(respuesta.body);
                         console.log(respuesta);
 
                         $('#nombre').append(respuesta.person.name);
